@@ -70,5 +70,19 @@ public class RestaurantFacade
         _context.SaveChanges();
         return menuItem;
     }
+    
+    public MenuItem UpdateMenuItem(MenuItemDTO menuItemDto)
+    {
+        MenuItem menuItem = _context.MenuItems.Find(menuItemDto.Id);
+        if (menuItem == null)
+        {
+            throw new Exception("MenuItem not found");
+        }
+        menuItem.ItemName = menuItemDto.ItemName;
+        menuItem.ItemDescription = menuItemDto.ItemDescription;
+        menuItem.Price = menuItemDto.Price;
+        _context.SaveChanges();
+        return menuItem;
+    }
 
 }

@@ -59,4 +59,19 @@ public class RestaurantApi : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+        
+        // PUT: api/Restaurant/MenuItem
+        [HttpPut("MenuItem")]
+        public IActionResult UpdateMenuItem([FromBody] MenuItemDTO menuItemDto)
+        {
+            try
+            {
+                _restaurantFacade.UpdateMenuItem(menuItemDto);
+                return Ok("Menu item updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }
