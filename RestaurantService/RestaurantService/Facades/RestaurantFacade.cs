@@ -18,7 +18,7 @@ public class RestaurantFacade
         Restaurant restaurant = new Restaurant(restaurantDto.Name, address, restaurantDto.Rating, restaurantDto.CuisineType);
         _context.Restaurants.Add(restaurant);
         _context.SaveChanges();
-        return new Restaurant();
+        return restaurant;
     }
 
 }
