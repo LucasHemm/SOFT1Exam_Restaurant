@@ -20,5 +20,27 @@ public class RestaurantFacade
         _context.SaveChanges();
         return restaurant;
     }
+    
+    public Restaurant GetRestaurant(int id)
+    {
+        Restaurant restaurant = _context.Restaurants.Find(id);
+        if (restaurant == null)
+        {
+            throw new Exception("Restaurant not found");
+        }
+        return restaurant;
+    }
+    
+    public Restaurant UpdateRestaurant(RestaurantDTO restaurantDto)
+    {
+        Restaurant restaurant = GetRestaurant(restaurantDto.Id);
+        Address address = _context.Addresses.Find(restaurantDto.Address.Id) ?? new Address(restaurantDto.Address);
+        restaurant.Name = restaurantDto.Name;
+        restaurant.Address = address;
+        restaurant.Rating = restaurantDto.Rating;
+        restaurant.CuisineType = restaurantDto.CuisineType;
+        _context.SaveChanges();
+        return restaurant;
+    }
 
 }

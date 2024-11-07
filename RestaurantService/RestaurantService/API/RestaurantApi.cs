@@ -29,4 +29,19 @@ public class RestaurantApi : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+        
+        // PUT: api/Restaurant
+        [HttpPut]
+        public IActionResult UpdateRestaurant([FromBody] RestaurantDTO restaurantDto)
+        {
+            try
+            {
+                _restaurantFacade.UpdateRestaurant(restaurantDto);
+                return Ok("Restaurant updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }
