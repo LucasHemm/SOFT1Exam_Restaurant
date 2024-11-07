@@ -1,7 +1,7 @@
 name: .NET 8 xUnit Tests
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore dependencies
         run: dotnet restore
