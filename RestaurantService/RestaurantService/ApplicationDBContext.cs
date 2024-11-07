@@ -27,5 +27,14 @@ public class ApplicationDbContext : DbContext
             optionsBuilder.UseSqlServer("Server=localhost,1433;Database=RestaurantService;Trusted_Connection=True;TrustServerCertificate=True;");
         }
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<MenuItem>()
+            .HasOne(mi => mi.Restaurant)
+            .WithMany(r => r.MenuItems)
+            .HasForeignKey("RestaurantId"); // Specify the FK without adding it to the entity
+    }
+
 
 }

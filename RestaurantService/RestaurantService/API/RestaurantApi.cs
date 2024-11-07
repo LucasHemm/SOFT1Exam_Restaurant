@@ -44,4 +44,19 @@ public class RestaurantApi : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+        
+        // POST: api/Restaurant/MenuItem    
+        [HttpPost("MenuItem")]
+        public IActionResult CreateMenuItem([FromBody] MenuItemDTO menuItemDto)
+        {
+            try
+            {
+                _restaurantFacade.CreateMenuItem(menuItemDto);
+                return Ok("Menu item created successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }

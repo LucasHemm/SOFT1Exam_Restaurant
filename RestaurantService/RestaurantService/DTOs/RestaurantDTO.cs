@@ -1,4 +1,6 @@
-﻿namespace RestaurantService.DTOs;
+﻿using RestaurantService.Models;
+
+namespace RestaurantService.DTOs;
 
 public class RestaurantDTO
 {
@@ -7,29 +9,31 @@ public class RestaurantDTO
     public AddressDTO Address { get; set; }
     public List<MenuItemDTO>? MenuItems { get; set; }
     public double Rating { get; set; }
+    public int NumberOfRatings { get; set; }
     public String CuisineType { get; set; }
     
-    public RestaurantDTO(int id, String name, AddressDTO address, List<MenuItemDTO> menuItems, double rating, String cuisineType)
+    public RestaurantDTO(int id, String name, AddressDTO address, double rating, int numberOfRatings, String cuisineType)
     {
         Id = id;
         Name = name;
         Address = address;
-        MenuItems = menuItems;
         Rating = rating;
+        NumberOfRatings = numberOfRatings;
         CuisineType = cuisineType;
     }
     
     public RestaurantDTO()
     {
-        
     }
     
-    //for creating a new restaurant
-    public RestaurantDTO(String name, AddressDTO address, double rating, String cuisineType)
+    public RestaurantDTO(Restaurant restaurant)
     {
-        Name = name;
-        Address = address;
-        Rating = rating;
-        CuisineType = cuisineType;
+        Id = restaurant.Id;
+        Name = restaurant.Name;
+        Address = new AddressDTO(restaurant.Address);
+        MenuItems = restaurant.MenuItems?.Select(menuItem => new MenuItemDTO(menuItem)).ToList();
+        Rating = restaurant.Rating;
+        NumberOfRatings = restaurant.NumberOfRatings;
+        CuisineType = restaurant.CuisineType;
     }
 }

@@ -20,7 +20,11 @@ public class Address
         ZipCode = zipCode;
         Region = region;
     }
-    //empty
+
+    public Address()
+    {
+    }
+
     public Address(AddressDTO restaurantDtoAddress)
     {
         Id = restaurantDtoAddress.Id;

@@ -1,4 +1,6 @@
-﻿namespace RestaurantService.DTOs;
+﻿using RestaurantService.Models;
+
+namespace RestaurantService.DTOs;
 
 public class MenuItemDTO
 {
@@ -6,26 +8,31 @@ public class MenuItemDTO
     public String ItemName { get; set; }
     public double Price  { get; set; }
     public String ItemDescription { get; set; }
+    public int RestaurantId { get; set; }
+    public string Image { get; set; }
     
-    public MenuItemDTO(int id, String itemName, double price, String itemDescription)
+    public MenuItemDTO(int id, String itemName, double price, String itemDescription, int restaurantId, string image)
     {
         Id = id;
         ItemName = itemName;
         Price = price;
         ItemDescription = itemDescription;
+        RestaurantId = restaurantId;
+        Image = image;
     }
     
     public MenuItemDTO()
     {
-        
     }
     
-    //for creating a new menu item
-    public MenuItemDTO(String itemName, double price, String itemDescription)
+    public MenuItemDTO(MenuItem menuItem)
     {
-        ItemName = itemName;
-        Price = price;
-        ItemDescription = itemDescription;
+        Id = menuItem.Id;
+        ItemName = menuItem.ItemName;
+        Price = menuItem.Price;
+        ItemDescription = menuItem.ItemDescription;
+        RestaurantId = menuItem.Restaurant.Id;
+        Image = menuItem.Image;
     }
 
 }
