@@ -161,4 +161,37 @@ public class IntegrationTest : IAsyncLifetime
             
         }
     }
+    
+    [Fact]
+    public void ShouldUpdateMenuItem()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
+            MenuItemDTO menuItemDto = new MenuItemDTO(0, "Big Mac", 4.99,"this is a burger",restaurant.Id,"image");
+            MenuItem menuItem = restaurantFacade.CreateMenuItem(menuItemDto);
+            menuItemDto = new MenuItemDTO(menuItem);
+            menuItemDto.Id = menuItem.Id;
+            menuItemDto.ItemName = "Quarter Pounder";
+            menuItemDto.Price = 5.99;
+            menuItemDto.ItemDescription = "this is a burger";
+            menuItemDto.Image = "image";
+            menuItemDto.RestaurantId = restaurant.Id;
+            restaurantFacade.UpdateMenuItem(menuItemDto);
+            MenuItem updatedMenuItem = context.MenuItems.Find(menuItem.Id);
+            Assert.NotNull(updatedMenuItem);
+            Assert.Equal(menuItemDto.ItemName, updatedMenuItem.ItemName);
+            Assert.Equal(menuItemDto.Price, updatedMenuItem.Price);
+            Assert.Equal(menuItemDto.ItemDescription, updatedMenuItem.ItemDescription);
+            Assert.Equal(menuItemDto.Image, updatedMenuItem.Image);
+            
+        }
+    }
 }
