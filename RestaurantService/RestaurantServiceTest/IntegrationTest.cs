@@ -62,4 +62,34 @@ public class IntegrationTest : IAsyncLifetime
             Assert.Equal("Test Restaurant", createdRestaurant.Name);
         }
     }
+    
+    [Fact]
+    public void ShouldUpdateRestaurant()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+            RestaurantDTO restaurantDto = new RestaurantDTO("Test Restaurant", new AddressDTO(0, "Test Street", "Test City", "12345", "Test Region"), 5, "Test Cuisine");
+            Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
+            restaurantDto.Id = restaurant.Id;
+            restaurantDto.Name = "Updated Restaurant";
+            restaurantDto.Address = new AddressDTO(0, "Updated Street", "Updated City", "54321", "Updated Region");
+            restaurantDto.Rating = 4;
+            restaurantDto.CuisineType = "Updated Cuisine";
+            restaurantFacade.UpdateRestaurant(restaurantDto);
+            Restaurant updatedRestaurant = context.Restaurants.Find(restaurant.Id);
+            Assert.NotNull(updatedRestaurant);
+            Assert.Equal("Updated Restaurant", updatedRestaurant.Name);
+            Assert.Equal("Updated Street", updatedRestaurant.Address.Street);
+            Assert.Equal("Updated City", updatedRestaurant.Address.City);
+            Assert.Equal("54321", updatedRestaurant.Address.ZipCode);
+            Assert.Equal("Updated Region", updatedRestaurant.Address.Region);
+            Assert.Equal(4, updatedRestaurant.Rating);
+            Assert.Equal("Updated Cuisine", updatedRestaurant.CuisineType);
+        }
+    }
 }
