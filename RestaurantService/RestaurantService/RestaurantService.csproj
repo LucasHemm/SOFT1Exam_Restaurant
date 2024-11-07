@@ -27,9 +27,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="API\" />
-      <Folder Include="Facades\" />
-    </ItemGroup>
-
 </Project>
