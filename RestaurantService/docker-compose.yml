@@ -3,4 +3,4 @@
     image: restaurantservice
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: RestaurantService/Dockerfile
