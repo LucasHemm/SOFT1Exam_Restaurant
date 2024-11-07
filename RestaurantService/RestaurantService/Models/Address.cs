@@ -1,4 +1,6 @@
-﻿namespace RestaurantService.Models;
+﻿using RestaurantService.DTOs;
+
+namespace RestaurantService.Models;
 
 public class Address
 {
@@ -19,9 +21,13 @@ public class Address
         Region = region;
     }
     //empty
-    public Address()
+    public Address(AddressDTO restaurantDtoAddress)
     {
-        
+        Id = restaurantDtoAddress.Id;
+        Street = restaurantDtoAddress.Street;
+        City = restaurantDtoAddress.City;
+        ZipCode = restaurantDtoAddress.ZipCode;
+        Region = restaurantDtoAddress.Region;
     }
     
     //for creating a new address
