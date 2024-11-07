@@ -1,4 +1,6 @@
-﻿namespace RestaurantService.DTOs;
+﻿using RestaurantService.Models;
+
+namespace RestaurantService.DTOs;
 
 public class AddressDTO
 {
@@ -8,7 +10,6 @@ public class AddressDTO
     public String ZipCode{ get; set; }
     public String Region { get; set; }
     
-    
     public AddressDTO(int id, String street, String city, String zipCode, String region)
     {
         Id = id;
@@ -17,10 +18,18 @@ public class AddressDTO
         ZipCode = zipCode;
         Region = region;
     }
-    //empty
+
     public AddressDTO()
     {
-        
+    }
+
+    public AddressDTO(Address address)
+    {
+        Id = address.Id;
+        Street = address.Street;
+        City = address.City;
+        ZipCode = address.ZipCode;
+        Region = address.Region;
     }
     
     //for creating a new address

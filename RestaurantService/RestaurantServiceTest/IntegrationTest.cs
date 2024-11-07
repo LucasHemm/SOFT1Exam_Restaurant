@@ -8,6 +8,7 @@ using RestaurantService.DTOs;
 using RestaurantService.Facades;
 using RestaurantService.Models;
 using Testcontainers.MsSql;
+using Address = Docker.DotNet.Models.Address;
 
 namespace RestaurantServiceTest;
 
@@ -55,11 +56,13 @@ public class IntegrationTest : IAsyncLifetime
         using (var context = new ApplicationDbContext(options))
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
-            RestaurantDTO restaurantDto = new RestaurantDTO("Test Restaurant", new AddressDTO(0, "Test Street", "Test City", "12345", "Test Region"), 5, "Test Cuisine");
+
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             Restaurant createdRestaurant = context.Restaurants.Find(restaurant.Id);
             Assert.NotNull(createdRestaurant);
-            Assert.Equal("Test Restaurant", createdRestaurant.Name);
+            Assert.Equal(restaurantDto.Name, createdRestaurant.Name);
+            
         }
     }
     
@@ -73,23 +76,89 @@ public class IntegrationTest : IAsyncLifetime
         using (var context = new ApplicationDbContext(options))
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
-            RestaurantDTO restaurantDto = new RestaurantDTO("Test Restaurant", new AddressDTO(0, "Test Street", "Test City", "12345", "Test Region"), 5, "Test Cuisine");
+
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
+            restaurantDto = new RestaurantDTO(restaurantFacade.GetRestaurant(restaurant.Id));
             restaurantDto.Id = restaurant.Id;
-            restaurantDto.Name = "Updated Restaurant";
-            restaurantDto.Address = new AddressDTO(0, "Updated Street", "Updated City", "54321", "Updated Region");
-            restaurantDto.Rating = 4;
-            restaurantDto.CuisineType = "Updated Cuisine";
+            restaurantDto.Name = "Burger King";
+            restaurantDto.Address.Street = "456 Elm St";
+            restaurantDto.Address.City = "Chicago";
+            restaurantDto.Address.ZipCode = "54321";
+            restaurantDto.Address.Region = "IL";
+            restaurantDto.Rating = 4.0;
+            restaurantDto.NumberOfRatings = 50;
+            restaurantDto.CuisineType = "Fast Food";
             restaurantFacade.UpdateRestaurant(restaurantDto);
             Restaurant updatedRestaurant = context.Restaurants.Find(restaurant.Id);
             Assert.NotNull(updatedRestaurant);
-            Assert.Equal("Updated Restaurant", updatedRestaurant.Name);
-            Assert.Equal("Updated Street", updatedRestaurant.Address.Street);
-            Assert.Equal("Updated City", updatedRestaurant.Address.City);
-            Assert.Equal("54321", updatedRestaurant.Address.ZipCode);
-            Assert.Equal("Updated Region", updatedRestaurant.Address.Region);
-            Assert.Equal(4, updatedRestaurant.Rating);
-            Assert.Equal("Updated Cuisine", updatedRestaurant.CuisineType);
+            Assert.Equal(restaurantDto.Name, updatedRestaurant.Name);
+            Assert.Equal(restaurantDto.Address.Street, updatedRestaurant.Address.Street);
+            Assert.Equal(restaurantDto.Address.City, updatedRestaurant.Address.City);
+            Assert.Equal(restaurantDto.Address.ZipCode, updatedRestaurant.Address.ZipCode);
+            Assert.Equal(restaurantDto.Address.Region, updatedRestaurant.Address.Region);
+            Assert.Equal(restaurantDto.Rating, updatedRestaurant.Rating);
+            Assert.Equal(restaurantDto.NumberOfRatings, updatedRestaurant.NumberOfRatings);
+            Assert.Equal(restaurantDto.CuisineType, updatedRestaurant.CuisineType);
+           
+        }
+    }
+    
+    [Fact]
+    public void ShouldGetRestaurant()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
+            Restaurant createdRestaurant = restaurantFacade.GetRestaurant(restaurant.Id);
+            Assert.NotNull(createdRestaurant);
+            Assert.Equal(restaurantDto.Name, createdRestaurant.Name);
+            
+        }
+    }
+    
+    [Fact]
+    public void ShouldThrowExceptionWhenRestaurantNotFound()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+
+            Assert.Throws<Exception>(() => restaurantFacade.GetRestaurant(1));
+            
+        }
+    }
+    
+    [Fact]
+    public void ShouldCreateMenuItem()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
+            MenuItemDTO menuItemDto = new MenuItemDTO(0, "Big Mac", 4.99,"this is a burger",restaurant.Id,"image");
+            MenuItem menuItem = restaurantFacade.CreateMenuItem(menuItemDto);
+            MenuItem createdMenuItem = context.MenuItems.Find(menuItem.Id);
+            Assert.NotNull(createdMenuItem);
+            Assert.Equal(menuItemDto.ItemName, createdMenuItem.ItemName);
+            
         }
     }
 }
