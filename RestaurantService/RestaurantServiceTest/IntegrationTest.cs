@@ -57,7 +57,7 @@ public class IntegrationTest : IAsyncLifetime
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
 
-            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             Restaurant createdRestaurant = context.Restaurants.Find(restaurant.Id);
             Assert.NotNull(createdRestaurant);
@@ -77,7 +77,7 @@ public class IntegrationTest : IAsyncLifetime
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
 
-            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             restaurantDto = new RestaurantDTO(restaurantFacade.GetRestaurant(restaurant.Id));
             restaurantDto.Id = restaurant.Id;
@@ -115,7 +115,7 @@ public class IntegrationTest : IAsyncLifetime
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
 
-            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             Restaurant createdRestaurant = restaurantFacade.GetRestaurant(restaurant.Id);
             Assert.NotNull(createdRestaurant);
@@ -151,7 +151,7 @@ public class IntegrationTest : IAsyncLifetime
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
 
-            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             MenuItemDTO menuItemDto = new MenuItemDTO(0, "Big Mac", 4.99,"this is a burger",restaurant.Id,"image");
             MenuItem menuItem = restaurantFacade.CreateMenuItem(menuItemDto);
@@ -173,7 +173,7 @@ public class IntegrationTest : IAsyncLifetime
         {
             RestaurantFacade restaurantFacade = new RestaurantFacade(context);
 
-            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food");
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
             Restaurant restaurant = restaurantFacade.CreateRestaurant(restaurantDto);
             MenuItemDTO menuItemDto = new MenuItemDTO(0, "Big Mac", 4.99,"this is a burger",restaurant.Id,"image");
             MenuItem menuItem = restaurantFacade.CreateMenuItem(menuItemDto);

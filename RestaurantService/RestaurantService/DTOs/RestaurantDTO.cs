@@ -11,8 +11,10 @@ public class RestaurantDTO
     public double Rating { get; set; }
     public int NumberOfRatings { get; set; }
     public String CuisineType { get; set; }
+    public String Description { get; set; }
+    public String PhoneNumber { get; set; }
     
-    public RestaurantDTO(int id, String name, AddressDTO address, double rating, int numberOfRatings, String cuisineType)
+    public RestaurantDTO(int id, String name, AddressDTO address, double rating, int numberOfRatings, String cuisineType, String description, String phoneNumber)
     {
         Id = id;
         Name = name;
@@ -20,6 +22,8 @@ public class RestaurantDTO
         Rating = rating;
         NumberOfRatings = numberOfRatings;
         CuisineType = cuisineType;
+        Description = description;
+        PhoneNumber = phoneNumber;
     }
     
     public RestaurantDTO()
@@ -35,5 +39,7 @@ public class RestaurantDTO
         Rating = restaurant.Rating;
         NumberOfRatings = restaurant.NumberOfRatings;
         CuisineType = restaurant.CuisineType;
+        Description = restaurant.Description;
+        PhoneNumber = restaurant.PhoneNumber;
     }
 }
