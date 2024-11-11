@@ -24,7 +24,7 @@ public class ApplicationDbContext : DbContext
         // Only configure SQL Server if no options are provided (to avoid overriding options in tests)
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=RestaurantService;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=RestaurantServiceDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True;");
         }
     }
     
@@ -35,6 +35,5 @@ public class ApplicationDbContext : DbContext
             .WithMany(r => r.MenuItems)
             .HasForeignKey("RestaurantId"); // Specify the FK without adding it to the entity
     }
-
-
+    
 }

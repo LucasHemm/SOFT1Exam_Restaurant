@@ -15,7 +15,7 @@ public class RestaurantFacade
     
     public Restaurant CreateRestaurant(RestaurantDTO restaurantDto)
     {
-        Address address = _context.Addresses.Find(restaurantDto.Address.Id) ?? new Address(restaurantDto.Address);
+        Address address = (from a in _context.Addresses where a.City == restaurantDto.Address.City && a.Street == restaurantDto.Address.Street && a.ZipCode == restaurantDto.Address.ZipCode select a).FirstOrDefault() ?? new Address(restaurantDto.Address);
         Restaurant restaurant = new Restaurant(restaurantDto, address);
         _context.Restaurants.Add(restaurant);
         _context.SaveChanges();
