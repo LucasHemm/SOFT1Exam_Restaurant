@@ -39,7 +39,7 @@ public class RestaurantFacade
     {
         Restaurant restaurant = GetRestaurant(restaurantDto.Id);
         restaurant.Name = restaurantDto.Name;
-        restaurant.Address = UpdateAddress(restaurantDto.Address);
+        UpdateAddress(restaurantDto.Address,restaurant);
         restaurant.Rating = restaurantDto.Rating;
         restaurant.CuisineType = restaurantDto.CuisineType;
         restaurant.NumberOfRatings = restaurantDto.NumberOfRatings;
@@ -47,19 +47,11 @@ public class RestaurantFacade
         return restaurant;
     }
     
-    private Address UpdateAddress(AddressDTO addressDto)
+    private void UpdateAddress(AddressDTO addressDto,Restaurant restaurant)
     {
-        Address address = _context.Addresses.Find(addressDto.Id);
-        if (address == null)
-        {
-            throw new Exception("Address not found");
-        }
-        address.Street = addressDto.Street;
-        address.City = addressDto.City;
-        address.ZipCode = addressDto.ZipCode;
-        address.Region = addressDto.Region;
-        _context.SaveChanges();
-        return address;
+        restaurant.Address.Street = string.IsNullOrEmpty(addressDto.Street) ? restaurant.Address.Street : addressDto.Street;
+        restaurant.Address.City = addressDto.City;
+        restaurant.Address.ZipCode = addressDto.ZipCode;
     }
     
     public MenuItem CreateMenuItem(MenuItemDTO menuItemDto)
