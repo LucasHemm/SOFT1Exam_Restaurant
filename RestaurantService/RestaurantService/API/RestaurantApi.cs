@@ -74,4 +74,32 @@ public class RestaurantApi : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+        
+        // GET: api/Restaurant
+        [HttpGet]
+        public IActionResult GetAllRestaurants()
+        {
+            try
+            {
+                return Ok(_restaurantFacade.GetAllRestaurants().Select(restaurant => new RestaurantDTO(restaurant)).ToList());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        // GET: api/Restaurant/{id}
+        [HttpGet("{id}")]
+        public IActionResult GetRestaurant(int id)
+        {
+            try
+            {
+                return Ok(new RestaurantDTO(_restaurantFacade.GetRestaurant(id)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }
