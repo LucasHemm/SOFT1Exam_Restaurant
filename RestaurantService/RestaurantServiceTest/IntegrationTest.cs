@@ -194,4 +194,30 @@ public class IntegrationTest : IAsyncLifetime
             
         }
     }
+
+    [Fact]
+    public void ShouldGetAllRestaurants()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlServer(_connectionString)
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            RestaurantFacade restaurantFacade = new RestaurantFacade(context);
+            
+            RestaurantDTO restaurantDto1 = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
+            RestaurantDTO restaurantDto2 = new RestaurantDTO(0, "McDonalds2",
+                new AddressDTO("123 Main St2", "Spring2field", "123452", "IL2"), 4.52, 1020, "Fas2t Food", "tes2t",
+                "123456782");
+                
+            Restaurant restaurant1 = restaurantFacade.CreateRestaurant(restaurantDto1);
+            Restaurant restaurant2 = restaurantFacade.CreateRestaurant(restaurantDto2);
+            
+            List<Restaurant> restaurants = restaurantFacade.GetAllRestaurants();
+            Assert.NotNull(restaurants);
+            Assert.Equal(2, restaurants.Count);
+            
+        }
+    }
 }

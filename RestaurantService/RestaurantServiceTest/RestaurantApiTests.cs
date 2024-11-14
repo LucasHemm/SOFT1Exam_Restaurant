@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RestaurantService;
 using RestaurantService.DTOs;
+using RestaurantService.Models;
 using Testcontainers.MsSql;
 
 namespace RestaurantServiceTest;
@@ -157,5 +159,35 @@ public class RestaurantApiTests: IAsyncLifetime
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadAsStringAsync();
             Assert.Equal("Menu item updated successfully", result);
+        }
+        
+        [Fact]
+        public async Task GetRestaurant_ShouldReturnOk_WhenRestaurantExists()
+        {
+            // Arrange
+            RestaurantDTO restaurantDto = new RestaurantDTO(0,"McDonalds", new AddressDTO("123 Main St", "Springfield", "12345", "IL"), 4.5, 100, "Fast Food","test","12345678");
+
+           
+            var response1 = await _client.PostAsJsonAsync("/api/RestaurantApi", restaurantDto);
+            
+            response1.EnsureSuccessStatusCode();
+            // Act: Send a GET request to retrieve the restaurant by ID
+            var response = await _client.GetAsync($"/api/RestaurantApi/1");
+
+            // Assert: Verify response is 200 OK and contains the restaurant data
+            response.EnsureSuccessStatusCode();
+            var restaurant = await response.Content.ReadFromJsonAsync<Restaurant>();
+            Assert.NotNull(restaurant);
+            Assert.Equal(restaurantDto.Name, restaurant.Name);
+        }
+        
+        [Fact]
+        public async Task GetAllRestaurants_ShouldReturnOK()
+        {
+            // Act: Send a GET request to retrieve all restaurants
+            var response = await _client.GetAsync("/api/RestaurantApi");
+
+            // Assert: Verify response is 200 OK
+            response.EnsureSuccessStatusCode();
         }
 }

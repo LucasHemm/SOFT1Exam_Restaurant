@@ -47,6 +47,14 @@ public class RestaurantFacade
         return restaurant;
     }
     
+    public List<Restaurant> GetAllRestaurants()
+    {
+        return _context.Restaurants
+            .Include(restaurant => restaurant.Address)
+            .Include(restaurant => restaurant.MenuItems)
+            .ToList();
+    }
+    
     private void UpdateAddress(AddressDTO addressDto,Restaurant restaurant)
     {
         restaurant.Address.Street = string.IsNullOrEmpty(addressDto.Street) ? restaurant.Address.Street : addressDto.Street;
@@ -76,5 +84,7 @@ public class RestaurantFacade
         _context.SaveChanges();
         return menuItem;
     }
+    
+    
 
 }
