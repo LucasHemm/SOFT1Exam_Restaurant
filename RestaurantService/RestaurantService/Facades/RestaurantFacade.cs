@@ -73,17 +73,27 @@ public class RestaurantFacade
     
     public MenuItem UpdateMenuItem(MenuItemDTO menuItemDto)
     {
-        MenuItem menuItem = _context.MenuItems.Find(menuItemDto.Id);
+        // Use eager loading to include the Restaurant entity
+        var menuItem = _context.MenuItems
+            .Include(m => m.Restaurant) // This ensures Restaurant is loaded
+            .FirstOrDefault(m => m.Id == menuItemDto.Id);
+
         if (menuItem == null)
         {
-            throw new Exception("MenuItem not found");
+            throw new KeyNotFoundException("MenuItem not found or associated Restaurant does not exist");
         }
+
+        // Update the MenuItem properties
         menuItem.ItemName = menuItemDto.ItemName;
         menuItem.ItemDescription = menuItemDto.ItemDescription;
         menuItem.Price = menuItemDto.Price;
+
+        // Save changes to the database
         _context.SaveChanges();
         return menuItem;
     }
+
+
     
     
 

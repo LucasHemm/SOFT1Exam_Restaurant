@@ -87,8 +87,9 @@ public class RestaurantApiTests: IAsyncLifetime
 
             // Assert
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            Assert.Equal("Restaurant created successfully", result);
+            var result = await response.Content.ReadFromJsonAsync(typeof(RestaurantDTO));
+            Assert.Equal(restaurantDto.Name, ((RestaurantDTO)result).Name);
+            
         }
 
         [Fact]
@@ -106,8 +107,8 @@ public class RestaurantApiTests: IAsyncLifetime
 
             // Assert
             response2.EnsureSuccessStatusCode();
-            var result = await response2.Content.ReadAsStringAsync();
-            Assert.Equal("Restaurant updated successfully", result);
+            var result = await response2.Content.ReadFromJsonAsync(typeof(RestaurantDTO));
+            Assert.Equal(restaurantDto2.Name, ((RestaurantDTO)result).Name);
         }
 
         [Fact]
@@ -129,8 +130,9 @@ public class RestaurantApiTests: IAsyncLifetime
 
             // Assert
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            Assert.Equal("Menu item created successfully", result);
+            var result = await response.Content.ReadFromJsonAsync(typeof(MenuItemDTO));
+            Assert.Equal(menuItemDto.ItemName, ((MenuItemDTO)result).ItemName);
+            
         }
 
         [Fact]
@@ -157,8 +159,8 @@ public class RestaurantApiTests: IAsyncLifetime
 
             // Assert
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            Assert.Equal("Menu item updated successfully", result);
+            var result = await response.Content.ReadFromJsonAsync(typeof(MenuItemDTO));
+            Assert.Equal(updatedMenuItemDto.ItemName, ((MenuItemDTO)result).ItemName);
         }
         
         [Fact]
