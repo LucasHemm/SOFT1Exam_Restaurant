@@ -21,8 +21,8 @@ public class RestaurantApi : ControllerBase
         {
             try
             {
-                _restaurantFacade.CreateRestaurant(restaurantDto);
-                return Ok("Restaurant created successfully");
+                RestaurantDTO createdRestaurant = new RestaurantDTO(_restaurantFacade.CreateRestaurant(restaurantDto));
+                return Ok(createdRestaurant);
             }
             catch (Exception ex)
             {
@@ -36,8 +36,8 @@ public class RestaurantApi : ControllerBase
         {
             try
             {
-                _restaurantFacade.UpdateRestaurant(restaurantDto);
-                return Ok("Restaurant updated successfully");
+                RestaurantDTO updateRestaurant = new RestaurantDTO(_restaurantFacade.UpdateRestaurant(restaurantDto));
+                return Ok(updateRestaurant);
             }
             catch (Exception ex)
             {
@@ -51,8 +51,8 @@ public class RestaurantApi : ControllerBase
         {
             try
             {
-                _restaurantFacade.CreateMenuItem(menuItemDto);
-                return Ok("Menu item created successfully");
+                MenuItemDTO createdMenuItem = new MenuItemDTO(_restaurantFacade.CreateMenuItem(menuItemDto));
+                return Ok(createdMenuItem);
             }
             catch (Exception ex)
             {
@@ -66,8 +66,8 @@ public class RestaurantApi : ControllerBase
         {
             try
             {
-                _restaurantFacade.UpdateMenuItem(menuItemDto);
-                return Ok("Menu item updated successfully");
+                MenuItemDTO updatedMenuItem = new MenuItemDTO(_restaurantFacade.UpdateMenuItem(menuItemDto));
+                return Ok(updatedMenuItem);
             }
             catch (Exception ex)
             {
