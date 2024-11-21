@@ -93,8 +93,10 @@ public class RestaurantFacade
         return menuItem;
     }
 
-
-    
-    
-
+    //Get all menu items for a restaurant by restaurantid
+    public List<MenuItem> GetMenuItems(int restaurantId)
+    {
+        Restaurant restaurant = GetRestaurant(restaurantId);
+        return restaurant.MenuItems;
+    }
 }

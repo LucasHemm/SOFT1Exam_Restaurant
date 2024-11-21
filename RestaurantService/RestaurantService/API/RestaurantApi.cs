@@ -102,4 +102,19 @@ public class RestaurantApi : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+        
+        // GET: api/Restaurant/MenuItems/{id}
+        [HttpGet("MenuItems/{id}")]
+        public IActionResult GetMenuItems(int id)
+        {
+            try
+            {
+                return Ok(_restaurantFacade.GetMenuItems(id).Select(menuItem => new MenuItemDTO(menuItem)).ToList());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
 }
