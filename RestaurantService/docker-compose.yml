@@ -1,6 +1,0 @@
-﻿services:
-  restaurantservice:
-    image: restaurantservice
-    build:
-      context: .
-      dockerfile: RestaurantService/Dockerfile

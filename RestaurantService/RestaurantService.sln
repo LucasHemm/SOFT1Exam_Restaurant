@@ -3,9 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantService", "RestaurantService\RestaurantService.csproj", "{8607F0D6-0F4B-4F2B-855E-BFBEED2C4ACA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C770F255-F1F6-4182-A55D-6F38246C8D46}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantServiceTest", "RestaurantServiceTest\RestaurantServiceTest.csproj", "{A5535C29-1012-4511-B498-6B9FFBBD97E6}"
 EndProject
