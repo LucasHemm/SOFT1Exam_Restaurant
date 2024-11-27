@@ -99,4 +99,15 @@ public class RestaurantFacade
         Restaurant restaurant = GetRestaurant(restaurantId);
         return restaurant.MenuItems;
     }
+    
+    
+    //Update the rating and number of a restaurant
+    public Restaurant UpdateRestaurantWithRating(UpdateRatingDTO updateRatingDto)
+    {
+        Restaurant restaurant = GetRestaurant(updateRatingDto.Id);
+        restaurant.Rating = updateRatingDto.Rating;
+        restaurant.NumberOfRatings = updateRatingDto.NumberOfRatings;
+        _context.SaveChanges();
+        return restaurant;
+    }
 }
