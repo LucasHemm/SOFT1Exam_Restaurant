@@ -117,4 +117,19 @@ public class RestaurantApi : ControllerBase
             }
         }
         
+        //Update the rating and number of ratings of a restaurant
+        // PUT: api/Restaurant/Rating
+        [HttpPut("Rating")]
+        public IActionResult UpdateRestaurantWithRating([FromBody] UpdateRatingDTO updateRatingDto)
+        {
+            try
+            {
+                RestaurantDTO updatedRestaurant = new RestaurantDTO(_restaurantFacade.UpdateRestaurantWithRating(updateRatingDto));
+                return Ok(updatedRestaurant);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }
