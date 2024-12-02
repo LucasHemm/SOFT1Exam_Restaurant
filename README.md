@@ -11,6 +11,7 @@
     - [Pipeline Steps](#pipeline-steps)
   - [Tech stack](#tech-stack)
   - [API Documentation](#api-documentation)
+    - [REST](#rest)
   - [Docker Compose](#docker-compose)
     - [Overview](#overview)
     - [Dockerhub](#dockerhub)
@@ -56,6 +57,7 @@ The tech stack for this microservice is as follows:
 - **Coverlet**: The library used to create code coverage reports.
 
 ## API Documentation
+### REST
 
 | **Endpoint**                  | **Result**                                    | **Format**   |
 |-------------------------------|-----------------------------------------------|--------------|
