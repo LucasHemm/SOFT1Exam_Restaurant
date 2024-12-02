@@ -60,13 +60,12 @@ The tech stack for this microservice is as follows:
 | **Endpoint**                  | **Result**                                    | **Format**   |
 |-------------------------------|-----------------------------------------------|--------------|
 | `POST /api/RestaurantApi`          | Creates a restaurant                              | JSON         |
-| `PUT /api/RestaurantApi`           | Updates restaurant status                          | JSON         |
+| `PUT /api/RestaurantApi`           | Updates a restaurant                           | JSON         |
 | `GET /api/RestaurantApi`           | Retrieves a list of all restaurants                | JSON         |
 | `GET /api/RestaurantApi/{id}`      | Retrieve a restaurant by id                        | JSON         |
-| `GET api/RestaurantApi/MenuItem`| Get list of all menuitems               | JSON         |
 | `GET api/RestaurantApi/MenuItem/{id}`| Get a menuitem by id               | JSON         |
-| `POST api/RestaurantApi/MenuItem`| Create a menuitem               | JSON         |
-| `PUT api/RestaurantApi/MenuItem`| Update a menuitem               | JSON         |
+| `POST api/RestaurantApi/MenuItem`| Creates a menuitem               | JSON         |
+| `PUT api/RestaurantApi/MenuItem`| Updates a menuitem               | JSON         |
 | `PUT api/RestaurantApi/Rating`| Updates the rating and number of ratings of a restaurant               | JSON         |
 
 
@@ -112,7 +111,7 @@ https://hub.docker.com/u/lucashemcph
 
 ### Services / Containers
 
-- **App** / **Orderandfeedbackservicecontainer**: Runs the main application server.
+- **App** / **Restaurantservicecontainer**: Runs the main application server.
 - **DB** / **Database**: Runs the Microsoft SQL Server database.
 - **Prometheus** / **Prometheus**: Runs the prometheus server.
 - **Grafana** / **Grafana**: Runs the grafana server.
